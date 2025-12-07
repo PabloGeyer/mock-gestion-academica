@@ -1,0 +1,18 @@
+services:
+  mock-gestion-academica:
+    build: .
+    container_name: mock-gestion-academica
+    ports:
+      - "8081:8080"
+    networks:
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mock-gestion.rule=Host(`gestion.universidad.localhost`)"
+      - "traefik.http.routers.mock-gestion.entrypoints=http,https"
+      - "traefik.http.routers.mock-gestion.tls=true"
+      - "traefik.http.services.mock-gestion.loadbalancer.server.port=8080"
+
+networks:
+  traefik-public:
+    external: true
